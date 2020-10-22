@@ -29,19 +29,22 @@
 Log into your <a href="https://www.dndbeyond.com/my-content/characters" target="_blank">D&amp;D Beyond Account</a>.
 Move your mouse over the 'Creations' tab at the top of the window and select 'My Characters'.
 Find the character you want to convert and click 'View'.
-Take a look at the Address bar, it should look something like:
+Copy the link in the Address bar; it should look something like:
 https://www.dndbeyond.com/profile/YourUserName/characters/<b>8675309</b>
 
-Find the Character ID. In the above example it's <b>8675309</b>.
-Paste this ID in the 'Character ID' text box and click 'Get Character Data'.
+Paste this link in the 'Character URL' text box and click 'Get Character Data'.
 It will take a short while in order for the data to populate.
 Click the 'Download XML' button to save the character to your computer.</pre>
 For instructions on how to import the XML file into Fantasy Grounds,
 please watch <a href="https://www.youtube.com/watch?v=Rzd6zPxClFY">
 <b>this video</b></a> by Digital Dungeon Master.<br /><br />
-        <!--<b>Character ID:&nbsp;&nbsp;<input type="text" id="getcharID">&nbsp;&nbsp;<button id="grabChar">Get Character Data</button><button id="popCharID">Choose</button></b><br />-->
-        <b>Character ID:&nbsp;&nbsp;<input type="text" id="getcharID">&nbsp;&nbsp;<button id="grabChar">Get Character Data</button></b><br />
+        <b>Character URL:&nbsp;&nbsp;<input type="text" id="getcharID">&nbsp;&nbsp;<button id="grabChar">Get JSON Link</button></b><br />
         <br />
+        <div id="step2" style="display:none">
+          <div id="jsonLink"></div><br />
+            Paste the text here:<br />
+            <textarea id="jsonText" style="width: 100%;max-width: 750px;height:150px;resize:none;overflow:auto;" ></textarea><br /><br />
+        </div>
         <textarea id="textHere"></textarea><br />
         <button id="dlChar">Download XML</button>&nbsp;&nbsp;<button id="resetChar">Reset ALL</button><br /><br />
 

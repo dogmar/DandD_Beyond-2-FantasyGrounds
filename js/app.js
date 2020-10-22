@@ -264,8 +264,8 @@ $(function() {
     $("#getcharID").jqxInput({ placeHolder: "Enter Character ID", height: "35px", width: 200, minLength: 4, theme: "darkblue"});
     $("#dlChar").jqxButton({ width: "120px", height: "35px", theme: "darkblue" });
     $("#resetChar").jqxButton({ width: "120px", height: "35px", theme: "darkblue" });
-    $("#verButtonC").jqxRadioButton({width: 250, height: 25, checked: true, theme: "darkblue"});
-    $("#verButtonU").jqxRadioButton({width: 250, height: 25, theme: "darkblue"});
+    $("#verButtonC").jqxRadioButton({width: 250, height: 25, checked: false, theme: "darkblue"});
+    $("#verButtonU").jqxRadioButton({width: 250, height: 25, checked: true, theme: "darkblue"});
     $("#jqxMenu").jqxMenu({ width: 95, height: "145px", mode: "vertical", theme: "darkblue"});
     $("#jqxMenu").css("visibility", "visible");
 
@@ -291,20 +291,10 @@ $(function() {
     });
 
     $('#grabChar').on("click", function() {
-        if (fgVersion == 0) {
-            if (confirm("You've selected to create a character for FG Classic. Is this correct?")){
-                //
-            } else {
-                return(false);
-            }
-        } else {
-            if (confirm("You've selected to create a character for FG Unity. Is this correct?")){
-                //
-            } else {
-                return(false);
-            }
-        }
-        if(!$('#getcharID').val().trim().match(/\d+/)) {
+        let charID = $('#getcharID').val().trim().match(/\d+$/);
+        charID = Array.isArray(charID) && charID[0];
+        
+        if(charID && !charID.match(/\d+/)) {
             alert("Um, please enter your Character ID");
         } else if ($('#textHere').val() != "")  {
             var resetMe = confirm("You need to clear previous data, do you want me to do that for you?");
@@ -312,24 +302,20 @@ $(function() {
                 window.location.reload(false);
             }
         } else {
-            $.ajax({
-                data: { charID:  $('#getcharID').val().trim() },
-                url: 'scripts/getChar.php',
-                method: 'GET',
-                success: function(data) {
-                    try {
-                        parseCharacter($.parseJSON(data));
-                    } catch(e) {
-                        alert("Unable to parse character: " + $('#getcharID').val().trim());
-                        console.error(e);
-                        return;
-                    }
-                },
-                failure: function(msg) {
-                    alert("Unable to find character: " + $('#getcharID').val().trim());
-                    return;
+            $('#jsonLink').html('<a target="_blank" href="' + 'https://www.dndbeyond.com/character/' + charID + '/json' + '">Click this and copy all the text</a>');
+            $('#jsonText').change((e) => {
+                let charJSON = $('#jsonText').val();
+                try {
+                  parseCharacter($.parseJSON(charJSON));
+                } catch (e) {
+                  alert(
+                    "Unable to parse character: " + $("#getcharID").val().trim()
+                  );
+                  console.error(e);
+                  return;
                 }
             });
+            $('#step2').show();
         }
     });
 
